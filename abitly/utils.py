@@ -25,10 +25,10 @@ def format_exception(exception):
     exception_list = str(exception).split(': ')
 
     # Get the statusCode from the slice of the first item of the exception_list
-    statusCode = exception_list[0][:3]
+    statusCode = int(exception_list[0][:3])
 
     # Get the status from the slice of the first item of the exception_list
-    status = exception_list[0][3:]
+    status = exception_list[0][3:].strip()
 
     # Get the error_message from the second item of the exception_list
     error_message = exception_list[1]

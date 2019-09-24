@@ -11,4 +11,4 @@ def test_format_method_not_allowed_exception():
 
     assert statusCode == 405
     assert status == 'Method Not Allowed'
-    assert statusCode == 'The method is not allowed for the requested URL.'
+    assert error_message == 'The method is not allowed for the requested URL.'
