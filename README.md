@@ -22,7 +22,7 @@ python3 -m venv env
 
 **Note**: All the **POSTGRES\_\*** variables should correspond to the configuration of the `docker-compose.yml` file.
 
-```dotenv
+```.env
 
 FLASK_APP = 'abitly'
 POSTGRES_USERNAME = 'abitly'
