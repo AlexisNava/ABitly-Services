@@ -1,8 +1,8 @@
 # Folders
-.vscode/
-.mypy_cache/
-env/
 __pycache__/
+.pytest_cache/
+env/
+.vscode/
 
 # Files
 .env
