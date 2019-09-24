@@ -6,9 +6,9 @@
 
 - [Python](https://www.python.org/downloads/) >= *v*3.6.8
 - [Pip](https://pip.pypa.io/en/stable/installing/) >= *v*9.0.1
+- [Docker](https://docs.docker.com/install/) >= *v*19.03.2
+- [Docker Compose](https://docs.docker.com/compose/install/) >= *v*1.23.2
 - [venv](https://virtualenv.pypa.io/en/latest/installation/)
-- [Docker](https://docs.docker.com/install/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
 
 2. Create a virtual environment in the root directory of the project.
 
