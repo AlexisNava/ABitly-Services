@@ -1,5 +1,3 @@
-"""Define Base Configuration and Configuration per environments"""
-
 from dotenv import load_dotenv
 
 # Exports all the ENV Variables of the .env file
