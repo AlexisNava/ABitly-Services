@@ -55,6 +55,8 @@ pip install -r requirements.txt
 
 ## Usage
 
+**Note**: Before running the app you must have running a Postgres instance in a Docker container or in local.
+
 ### Run Postgres Container with Docker Compose
 
 ```sh
