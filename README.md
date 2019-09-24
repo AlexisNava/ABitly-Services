@@ -61,7 +61,7 @@ pip install -r requirements.txt
 
 ```sh
 
-docker compose up -d
+docker-compose up -d
 
 ```
 
@@ -85,7 +85,7 @@ make run
 
 ```sh
 
-make run:tests
+make test
 
 ```
 
