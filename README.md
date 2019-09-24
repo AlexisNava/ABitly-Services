@@ -87,7 +87,7 @@ export FLASK_ENV=development && flask run
 
 ```sh
 
-export FLASK_ENV=staging && py.test
+export FLASK_ENV=testing && py.test
 
 ```
 
@@ -95,7 +95,7 @@ export FLASK_ENV=staging && py.test
 
 ```sh
 
-export FLASK_ENV=staging && pytest --pylama ...
+export FLASK_ENV=testing && pytest --pylama ...
 
 ```
 
