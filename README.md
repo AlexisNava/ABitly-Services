@@ -71,7 +71,7 @@ docker-compose up -d
 
 ```sh
 
-make run:production
+export FLASK_ENV=production && flask run
 
 ```
 
@@ -79,7 +79,7 @@ make run:production
 
 ```sh
 
-make run
+export FLASK_ENV=development && flask run
 
 ```
 
@@ -87,7 +87,15 @@ make run
 
 ```sh
 
-make test
+export FLASK_ENV=staging && py.test
+
+```
+
+### Run the linter
+
+```sh
+
+export FLASK_ENV=staging && pytest --pylama ...
 
 ```
 
