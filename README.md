@@ -1,5 +1,7 @@
 # ABitly-Services
 
+RESTful Services for the ABitly project.
+
 ## Requirements
 
 1. Install the following dependencies:
@@ -91,4 +93,4 @@ make test
 
 ## License
 
-**ABitly-Services** is licensed under Apache License, Version 2.0.
+**ABitly-Services** is licensed under [Apache License, Version 2.0](https://github.com/AlexisNava/ABitly-Services/blob/master/LICENSE).
