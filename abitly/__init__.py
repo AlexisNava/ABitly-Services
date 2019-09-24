@@ -3,6 +3,9 @@
 import os
 from flask import Flask, jsonify
 
+# Utils
+from abitly.utils import format_exception
+
 
 def create_app():
     """Configure the Flask App"""
@@ -21,13 +24,11 @@ def create_app():
 
     # Error Handlers
     @app.errorhandler(400)
+    @app.errorhandler(404)
     @app.errorhandler(405)
     @app.errorhandler(500)
     def method_not_allowed(exception):
-        exception_list = str(exception).split(': ')
-        statusCode = exception_list[0][:3]
-        status = exception_list[0][3:]
-        error_message = exception_list[1]
+        statusCode, status, error_message = format_exception(exception)
 
         return jsonify(statusCode=statusCode,
                        status=status,
