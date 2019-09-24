@@ -3,6 +3,9 @@
 import os
 from flask import Flask, jsonify
 
+# Configuration
+from abitly.config import ProductionConfig, TestingConfig, DevelopmentConfig
+
 # Utils
 from abitly.utils import format_exception
 
@@ -11,6 +14,15 @@ def create_app():
     """Configure the Flask App"""
 
     app = Flask(__name__, instance_relative_config=True)
+    flask_env = os.getenv('FLASK_ENV')
+
+    # Use Config Classes per FLASK_ENV
+    if flask_env == 'production':
+        app.config.from_object(ProductionConfig)
+    elif flask_env == 'testing':
+        app.config.from_object(TestingConfig)
+    else:
+        app.config.from_object(DevelopmentConfig)
 
     # Routes
     @app.route('/')
