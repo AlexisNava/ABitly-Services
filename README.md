@@ -2,6 +2,8 @@
 
 RESTful Services for the ABitly project.
 
+[![CircleCI](https://circleci.com/gh/AlexisNava/ABitly-Services/tree/master.svg?style=svg)](https://circleci.com/gh/AlexisNava/ABitly-Services/tree/master)
+
 ## Requirements
 
 1. Install the following dependencies:
