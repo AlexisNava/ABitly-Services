@@ -34,3 +34,5 @@ def init_db():
         Base.metadata.create_all(bind=engine)
     except OperationalError as error:
         print(error)
+        
+        raise OperationalError
