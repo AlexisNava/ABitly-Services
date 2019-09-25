@@ -1,4 +1,4 @@
-"""Define the Blue Print for the Link Service"""
+"""Define the Blueprint for the Link Service"""
 
 from flask import Blueprint, request, jsonify
 from werkzeug.exceptions import BadRequest, InternalServerError
