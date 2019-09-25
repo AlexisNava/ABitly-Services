@@ -71,6 +71,9 @@ jobs:
       - restore_cache:
           key: deps9-{{ .Branch }}-{{ checksum "requirements.text" }}
       - run:
+          name: "Create ability package"
+          command: pip install -e .
+      - run:
           name: "Run Tests"
           command: py.test
 
