@@ -15,7 +15,7 @@ jobs:
       - run:
           name: "Run Lint"
           command: |
-            pip install -r requirements.txt
+            . env/bin/activate
             pytest --pylama ...
 
   run_tests:
