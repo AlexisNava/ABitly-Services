@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  activate_venv:
+  create_venv:
     docker:
       - image: circleci/python:3.6.8
     steps:
@@ -10,16 +10,16 @@ jobs:
           name: "Create Virtual Environment"
           command: |
             python3 -m venv env
-      - run:
-          name: "Activate Virtual Environment"
-          command: |
-            . env/bin/activate
 
   setup_env_variables:
     docker:
       - image: circleci/python:3.6.8
     steps:
       - checkout
+      - run:
+          name: "Activate Virtual Environment"
+          command: |
+            . env/bin/activate
       - run:
           name: "Set Up Custom Env Variables"
           command: |
@@ -37,6 +37,10 @@ jobs:
       - image: circleci/python:3.6.8
     steps:
       - checkout
+      - run:
+          name: "Activate Virtual Environment"
+          command: |
+            . env/bin/activate
       - restore_cache:
           key: deps9-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
@@ -52,6 +56,10 @@ jobs:
       - image: circleci/python:3.6.8
     steps:
       - checkout
+      - run:
+          name: "Activate Virtual Environment"
+          command: |
+            . env/bin/activate
       - restore_cache:
           key: deps9-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
@@ -68,6 +76,10 @@ jobs:
           POSTGRES_DB: abitlydb
     steps:
       - checkout
+      - run:
+          name: "Activate Virtual Environment"
+          command: |
+            . env/bin/activate
       - restore_cache:
           key: deps9-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
@@ -103,13 +115,13 @@ workflows:
 
   development:
     jobs:
-      - activate_venv:
+      - create_venv:
           filters:
             branches:
               ignore: master
       - setup_env_variables:
           requires:
-            - activate_venv
+            - create_venv
           filters:
             branches:
               ignore: master
@@ -134,13 +146,13 @@ workflows:
 
   production:
     jobs:
-      - activate_venv:
+      - create_venv:
           filters:
             branches:
               only: master
       - setup_env_variables:
           requires:
-            - activate_venv
+            - create_venv
           filters:
             branches:
               only: master
