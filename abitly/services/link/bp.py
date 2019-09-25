@@ -36,9 +36,9 @@ def create_link():
         # Gets the saved generated_url or creates a new one
         generated_url = get_generated_url(original_url)
 
-        return jsonify(statusCode=200, status='OK',
+        return jsonify(statusCode=201, status='Created',
                        generated_url=generated_url
-                       )
+                       ), 201
 
     except (BadRequest, InternalServerError) as error:
         raise error
