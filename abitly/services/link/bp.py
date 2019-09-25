@@ -4,7 +4,7 @@ from flask import Blueprint, request, jsonify
 from werkzeug.exceptions import BadRequest, InternalServerError
 
 # Controller
-from flaskr.services.link.controller import (validate_request_body,
+from abitly.services.link.controller import (validate_request_body,
                                              get_generated_url)
 
 link = Blueprint('link', __name__, url_prefix='/link')

@@ -40,7 +40,7 @@ def validate_request_body(body):
         return body['originalUrl']
 
 
-def generate_link(original_url):
+def get_generated_url(original_url):
     """Gets the saved generated_url or creates a new one
 
     Parameters
@@ -52,9 +52,9 @@ def generate_link(original_url):
     Raises
     ------
 
-    exception : BadRequest
-        Raises a BadRequest exception when the original_url is not
-    found in the JSON object or if it is not of type str
+    exception : InternalServerError
+        Raises an InternalServerError exception when catching an unexpected
+    error
 
     Returns
     -------
@@ -66,8 +66,9 @@ def generate_link(original_url):
     try:
         # Search in the links table the original_url
         found_original_url = Link.query.filter(Link.original_url ==
-                                               original_url)
+                                               original_url).first()
 
+        # If finds a saved original_url returns it
         if found_original_url:
             return found_original_url.generated_url
 
