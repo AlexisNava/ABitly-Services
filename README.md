@@ -87,7 +87,7 @@ export FLASK_ENV=development && flask run
 
 ```sh
 
-pip install -e . && export FLASK_ENV=testing && py.test
+pip install -e . && export FLASK_ENV=testing && pytest -v
 
 ```
 
