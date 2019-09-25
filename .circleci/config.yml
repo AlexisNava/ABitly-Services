@@ -16,7 +16,7 @@ jobs:
           name: "Run Lint"
           command: |
             . env/bin/activate
-            pytest --pylama ...
+            pytest --pylama abitly
 
   run_tests:
     docker:
