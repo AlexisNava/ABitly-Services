@@ -26,7 +26,7 @@ def init_db():
 
     # Models
 
-    print(f'{postgres_uri}')
+    print(f'Connected successfully to: {postgres_uri}')
 
     try:
         Base.metadata.create_all(bind=engine)
