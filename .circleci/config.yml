@@ -1,0 +1,171 @@
+version: 2.1
+
+jobs:
+  activate_venv:
+    docker:
+      - image: circleci/python:3.6.8
+    steps:
+      - checkout
+      - run:
+          name: "Create Virtual Environment"
+          command: |
+            python3 -m venv env
+      - run:
+          name: "Activate Virtual Environment"
+          command: |
+            . env/bin/activate
+
+  setup_env_variables:
+    docker:
+      - image: circleci/python:3.6.8
+    steps:
+      - checkout
+      - run:
+          name: "Set Up Custom Env Variables"
+          command: |
+            echo "export FLASK_APP=abitly" >> $BASH_ENV
+            echo "export POSTGRES_USERNAME=abitly" >> $BASH_ENV
+            echo "export POSTGRES_PASSWORD=abitly2019" >> $BASH_ENV
+            echo "export POSTGRES_DATABASE=abitlydb" >> $BASH_ENV
+            echo "export POSTGRES_HOST=0.0.0.0" >> $BASH_ENV
+            echo "export POSTGRES_PORT=5432" >> $BASH_ENV
+            echo "export HOST=0.0.0.0" >> $BASH_ENV
+            echo "export PORT=5000" >> $BASH_ENV
+
+  install_dependencies:
+    docker:
+      - image: circleci/python:3.6.8
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "requirements.text" }}
+      - run:
+          name: "Install Dependencies"
+          command: pip install -r requirements.txt
+      - save_cache:
+          paths:
+            - env
+          key: deps9-{{ .Branch }}-{{ checksum "requirements.text" }}
+
+  run_lint:
+    docker:
+      - image: circleci/python:3.6.8
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "requirements.text" }}
+      - run:
+          name: "Run Lint"
+          command: pytest --pylama ...
+
+  run_tests:
+    docker:
+      - image: circleci/python:3.6.8
+      - image: postgres:10.3
+        environment:
+          POSTGRES_USER: abitly
+          POSTGRES_PASSWORD: abitly2019
+          POSTGRES_DB: abitlydb
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "requirements.text" }}
+      - run:
+          name: "Create ability package"
+          command: pip install -e .
+      - run:
+          name: "Run Tests"
+          command: py.test
+
+  publish_docker_image:
+    docker:
+      - image: docker:19.03.2
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 18.09.3
+          docker_layer_caching: true
+      - run:
+          name: "Docker Login"
+          command: docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+      - run:
+          name: "Docker Build"
+          command: docker build -t $DOCKER_REPONAME .
+      - run:
+          name: "Tag Image"
+          command: docker tag $DOCKER_REPONAME $DOCKER_USERNAME/$DOCKER_REPONAME
+      - run:
+          name: "Publish Image"
+          command: docker push $DOCKER_USERNAME/$DOCKER_REPONAME
+
+workflows:
+  version: 2
+
+  development:
+    jobs:
+      - activate_venv:
+          filters:
+            branches:
+              ignore: master
+      - setup_env_variables:
+          requires:
+            - activate_venv
+          filters:
+            branches:
+              ignore: master
+      - install_dependencies:
+          requires:
+            - setup_env_variables
+          filters:
+            branches:
+              ignore: master
+      - run_lint:
+          requires:
+            - install_dependencies
+          filters:
+            branches:
+              ignore: master
+      - run_tests:
+          requires:
+            - install_dependencies
+          filters:
+            branches:
+              ignore: master
+
+  production:
+    jobs:
+      - activate_venv:
+          filters:
+            branches:
+              only: master
+      - setup_env_variables:
+          requires:
+            - activate_venv
+          filters:
+            branches:
+              only: master
+      - install_dependencies:
+          requires:
+            - setup_env_variables
+          filters:
+            branches:
+              only: master
+      - run_lint:
+          requires:
+            - install_dependencies
+          filters:
+            branches:
+              only: master
+      - run_tests:
+          requires:
+            - install_dependencies
+          filters:
+            branches:
+              only: master
+      - publish_docker_image:
+          requires:
+            - run_lint
+            - run_tests
+          filters:
+            branches:
+              only: master

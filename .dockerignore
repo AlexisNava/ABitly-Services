@@ -1,0 +1,13 @@
+# Folders
+.vscode/
+.circleci/
+.git/
+.pytest_cache
+ability.egg-info
+env/
+
+# Files
+.editorconfig
+.gitignore
+LICENSE
+README.md

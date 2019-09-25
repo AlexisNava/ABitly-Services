@@ -32,8 +32,6 @@ POSTGRES_PASSWORD = 'abitly2019'
 POSTGRES_DATABASE = 'abitlydb'
 POSTGRES_HOST = '0.0.0.0'
 POSTGRES_PORT = 5432
-HOST = '0.0.0.0'
-PORT = 5000
 
 ```
 
@@ -71,7 +69,7 @@ docker-compose up -d
 
 ```sh
 
-make run:production
+export FLASK_ENV=production && flask run
 
 ```
 
@@ -79,7 +77,7 @@ make run:production
 
 ```sh
 
-make run
+export FLASK_ENV=development && flask run
 
 ```
 
@@ -87,7 +85,15 @@ make run
 
 ```sh
 
-make test
+pip install -e . && export FLASK_ENV=testing && py.test
+
+```
+
+### Run the linter
+
+```sh
+
+export FLASK_ENV=testing && pytest --pylama ...
 
 ```
 
