@@ -4,6 +4,11 @@ jobs:
   run_lint:
     docker:
       - image: circleci/python:3.6.8
+      - image: postgres:10.3
+        environment:
+          POSTGRES_USER: abitly
+          POSTGRES_PASSWORD: abitly2019
+          POSTGRES_DB: abitlydb
     steps:
       - checkout
       - run:
