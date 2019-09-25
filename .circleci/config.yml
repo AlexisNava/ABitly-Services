@@ -94,3 +94,75 @@ jobs:
       - run:
           name: "Publish Image"
           command: docker push $DOCKER_USERNAME/$DOCKER_REPONAME
+
+workflows:
+  version: 2
+
+  development:
+    jobs:
+      - activate_venv:
+          filters:
+            branches:
+              ignore: master
+      - setup_env_variables:
+          requires:
+            - activate_venv
+          filters:
+            branches:
+              ignore: master
+      - install_dependencies:
+          requires:
+            - setup_env_variables
+          filters:
+            branches:
+              ignore: master
+      - run_lint:
+          requires:
+            - install_dependencies
+          filters:
+            branches:
+              ignore: master
+      - run_tests:
+          requires:
+            - install_dependencies
+          filters:
+            branches:
+              ignore: master
+
+  production:
+    jobs:
+      - activate_venv:
+          filters:
+            branches:
+              only: master
+      - setup_env_variables:
+          requires:
+            - activate_venv
+          filters:
+            branches:
+              only: master
+      - install_dependencies:
+          requires:
+            - setup_env_variables
+          filters:
+            branches:
+              only: master
+      - run_lint:
+          requires:
+            - install_dependencies
+          filters:
+            branches:
+              only: master
+      - run_tests:
+          requires:
+            - install_dependencies
+          filters:
+            branches:
+              only: master
+      - publish_docker_image:
+          requires:
+            - run_lint
+            - run_tests
+          filters:
+            branches:
+              only: master
