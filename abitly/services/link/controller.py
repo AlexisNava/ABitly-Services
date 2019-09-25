@@ -84,6 +84,5 @@ def get_generated_url(original_url):
 
         return generated_url
 
-    # pylama:ignore=W,E722
-    except:
+    except Exception:
         raise InternalServerError
