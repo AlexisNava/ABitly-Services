@@ -1,4 +1,4 @@
-# ABitly-Services
+# ABitly Services
 
 RESTful Services for the ABitly project.
 
