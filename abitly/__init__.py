@@ -9,6 +9,9 @@ from abitly.config import ProductionConfig, TestingConfig, DevelopmentConfig
 # Database
 from abitly.db import db_session, init_db
 
+# Blueprints
+from abitly.services.link.bp import link
+
 # Utils
 from abitly.utils import format_exception
 
@@ -41,6 +44,9 @@ def create_app():
         return jsonify(statusCode=200,
                        status='OK',
                        message='ABitly is running')
+
+    # Register Blueprints
+    app.register_blueprint(link)
 
     # Error Handlers
     @app.errorhandler(400)
