@@ -27,12 +27,9 @@ def create_app():
     # Routes
     @app.route('/')
     def index():
-        message_text = 'Flaskr is running on'
-        message_url = f'http://{os.getenv("HOST")}:{os.getenv("PORT")}'
-
         return jsonify(statusCode=200,
                        status='OK',
-                       message=f'{message_text} {message_url}')
+                       message='ABitly is running')
 
     # Error Handlers
     @app.errorhandler(400)
