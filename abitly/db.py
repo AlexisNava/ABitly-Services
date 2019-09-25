@@ -25,6 +25,8 @@ def init_db():
     """Create all tables stored in metadata"""
 
     # Models
+    # pylama:ignore=W,0611
+    import abitly.models
 
     print(f'Connected successfully to: {postgres_uri}')
 
