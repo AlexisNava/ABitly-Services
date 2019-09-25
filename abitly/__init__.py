@@ -6,6 +6,9 @@ from flask import Flask, jsonify
 # Configuration
 from abitly.config import ProductionConfig, TestingConfig, DevelopmentConfig
 
+# Database
+from abitly.db import db_session, init_db
+
 # Utils
 from abitly.utils import format_exception
 
@@ -23,6 +26,14 @@ def create_app():
         app.config.from_object(TestingConfig)
     else:
         app.config.from_object(DevelopmentConfig)
+
+    # Initialize DB
+    init_db()
+
+    # Remove DB Session
+    @app.teardown_appcontext
+    def shutdown_session(exception=None):
+        db_session.remove()
 
     # Routes
     @app.route('/')
