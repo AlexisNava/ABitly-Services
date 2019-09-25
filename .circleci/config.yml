@@ -29,7 +29,7 @@ jobs:
           command: |
             . env/bin/activate
             pip install -e .
-            pytest --pylama ...
+            pytest --pylama abitly
 
   run_tests:
     docker:
