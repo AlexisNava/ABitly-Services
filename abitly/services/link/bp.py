@@ -1,11 +1,12 @@
 """Define the Blueprint for the Link Service"""
 
-from flask import Blueprint, request, jsonify
-from werkzeug.exceptions import BadRequest, InternalServerError
+from flask import Blueprint, request, jsonify, redirect
+from werkzeug.exceptions import BadRequest, InternalServerError, NotFound
 
 # Controller
 from abitly.services.link.controller import (validate_request_body,
-                                             get_generated_url)
+                                             get_generated_url,
+                                             get_original_url)
 
 link = Blueprint('link', __name__, url_prefix='/link')
 
@@ -41,4 +42,14 @@ def create_link():
                        ), 201
 
     except (BadRequest, InternalServerError) as error:
+        raise error
+
+
+@link.route('/<url>')
+def redirect_to_original_url(url):
+    try:
+        original_url = get_original_url(url)
+
+        return redirect(original_url, code=302)
+    except (BadRequest, NotFound) as error:
         raise error
