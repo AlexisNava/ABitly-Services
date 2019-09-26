@@ -114,14 +114,13 @@ def get_original_url(generated_url):
     found_original_url : str
         The saved original_url
     """
-
     if type(generated_url) == str and len(generated_url) == 7:
         # Search the original url by the generated_url
-        found_original_url = Link.query.filter(Link.generated_url ==
-                                               generated_url).first()
+        found_original_url = Link.query.filter_by(
+            generated_url=generated_url).first()
 
         if found_original_url:
-            return found_original_url
+            return found_original_url.original_url
 
         raise NotFound
 
