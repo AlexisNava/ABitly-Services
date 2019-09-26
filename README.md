@@ -1,6 +1,8 @@
-# ABitly-Services
+# ABitly Services
 
 RESTful Services for the ABitly project.
+
+[![CircleCI](https://circleci.com/gh/AlexisNava/ABitly-Services/tree/master.svg?style=svg)](https://circleci.com/gh/AlexisNava/ABitly-Services/tree/master)
 
 ## Requirements
 
@@ -85,7 +87,7 @@ export FLASK_ENV=development && flask run
 
 ```sh
 
-pip install -e . && export FLASK_ENV=testing && py.test
+pip install -e . && export FLASK_ENV=testing && pytest -v
 
 ```
 
