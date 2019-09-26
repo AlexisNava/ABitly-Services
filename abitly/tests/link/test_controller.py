@@ -39,7 +39,7 @@ def test_get_generated_url_should_return_generated_url():
     original_url is of type str
     """
 
-    original_url = 'https://realpython.com/'
+    original_url = 'https://circleci.com/'
     generated_url = get_generated_url(original_url)
 
     assert len(generated_url) == 7
