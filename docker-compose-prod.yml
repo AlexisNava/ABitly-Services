@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  backend:
+    build: .
+    ports:
+      - 5001:5000
+    environment:
+      FLASK_APP: "abitly"
+      POSTGRES_USERNAME: "abitly"
+      POSTGRES_PASSWORD: "abitly2019"
+      POSTGRES_DATABASE: "abitlydb"
+      POSTGRES_HOST: "postgres"
+      POSTGRES_PORT: 5432
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:10.3
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: abitly
+      POSTGRES_PASSWORD: abitly2019
+      POSTGRES_DB: abitlydb
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres: ~
