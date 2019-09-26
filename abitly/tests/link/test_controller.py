@@ -1,5 +1,5 @@
 import pytest
-from werkzeug.exceptions import BadRequest, InternalServerError, NotFound
+from werkzeug.exceptions import BadRequest, InternalServerError
 
 # Link Controller
 from abitly.services.link.controller import (validate_request_body,
@@ -62,10 +62,3 @@ def test_get_original_url_should_rise_bad_request():
 
     with pytest.raises(BadRequest):
         get_original_url('4RjLzNF5')
-
-
-def test_get_original_url_should_rise_not_found():
-    """Should rise NotFound when the generated_url is not found"""
-
-    with pytest.raises(NotFound):
-        get_original_url('1234567')
