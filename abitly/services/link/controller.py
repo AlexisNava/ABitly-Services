@@ -1,6 +1,6 @@
 """Define process functions to use in the Link Service"""
 
-from werkzeug.exceptions import BadRequest, InternalServerError
+from werkzeug.exceptions import BadRequest, InternalServerError, NotFound
 from shortuuid import ShortUUID
 
 # DataBase
@@ -86,3 +86,43 @@ def get_generated_url(original_url):
 
     except Exception:
         raise InternalServerError
+
+
+def get_original_url(generated_url):
+    """Get the original_url
+
+    Parameters
+    ----------
+
+    generated_url : str
+        Saved generated_url
+
+    Raises
+    ------
+
+    exception : BadRequest
+        Raises BadRequest when the generated_url is not a string or is a string
+    with a minor length to 7
+
+    exception : NotFound
+        Raises NotFound when the generated_url is valid but is not found
+    in the links table
+
+    Returns
+    -------
+
+    found_original_url : str
+        The saved original_url
+    """
+
+    if type(generated_url) == str and len(generated_url) == 7:
+        # Search the original url by the generated_url
+        found_original_url = Link.query.filter(Link.generated_url ==
+                                               generated_url).first()
+
+        if found_original_url:
+            return found_original_url
+
+        raise NotFound
+
+    raise BadRequest
