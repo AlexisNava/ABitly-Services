@@ -1,5 +1,5 @@
 import pytest
-from werkzeug.exceptions import BadRequest, InternalServerError, NotFound
+from werkzeug.exceptions import BadRequest, InternalServerError
 
 # Link Controller
 from abitly.services.link.controller import (validate_request_body,
@@ -35,17 +35,6 @@ def test_validate_request_body_should_raise_bad_request():
         validate_request_body(request_data_wrong_type)
 
 
-def test_get_generated_url_should_return_generated_url():
-    """Should return the generated url when the
-    original_url is of type str
-    """
-
-    original_url = 'https://circleci.com/'
-    generated_url = get_generated_url(original_url)
-
-    assert len(generated_url) == 7
-
-
 def test_get_generated_url_should_raise_internal_server_error():
     """Should raise InternalServerError when the
     original_url is another of type str
@@ -57,29 +46,8 @@ def test_get_generated_url_should_raise_internal_server_error():
         get_generated_url(original_url)
 
 
-def test_get_original_url_should_return_original_url():
-    """Should return original_url when the generated_url have a
-    valid format
-    """
-
-    # Saves and generate a new generated_url
-    generated_url = get_generated_url('https://circleci.com/')
-
-    # Search generated_url
-    original_url = get_original_url(generated_url)
-
-    assert original_url == 'https://circleci.com/'
-
-
 def test_get_original_url_should_rise_bad_request():
     """Should rise BadRequest when the generated_url have an invalid format"""
 
     with pytest.raises(BadRequest):
         get_original_url('4RjLzNF5')
-
-
-def test_get_original_url_should_rise_not_found():
-    """Should rise NotFound when the generated_url is not found"""
-
-    with pytest.raises(NotFound):
-        get_original_url('1234567')

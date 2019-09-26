@@ -84,21 +84,28 @@ def test_create_link_should_responds_method_not_allowed(client):
     assert response_body['errorMessage'] == expected_message
 
 
-def test_create_link_should_responds_not_found(client):
-    """Should responds NotFound when makes a request with
-    a different url of /
+def test_redirect_to_original_url_should_responds_bad_request(client):
+    """Should responds BadRequest when the generated url don't have and
+    exactly length of 7 characters
     """
 
-    request_body = {
-        'originalUrl': 'https://discordapp.com/'
-    }
-    headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    }
+    response = client.get('/link/4RjLzNFg')
+    response_body = json.loads(response.get_data(as_text=True))
+    expected_message = ('The browser (or proxy) sent a request that this '
+                        'server could not understand.').format()
 
-    response = client.post('/link/qrVwsCR', data=json.dumps(request_body),
-                           headers=headers)
+    assert response.status_code == 400
+    assert response_body['status'] == 'Bad Request'
+    assert response_body['statusCode'] == 400
+    assert response_body['errorMessage'] == expected_message
+
+
+def test_redirect_to_original_url_should_responds_not_found(client):
+    """Should responds NotFound when not found the
+    generated_url in the links table
+    """
+
+    response = client.get('/link/1234567')
     response_body = json.loads(response.get_data(as_text=True))
     expected_message = ('The requested URL was not found on the server. '
                         'If you entered the URL manually please check '
@@ -107,4 +114,19 @@ def test_create_link_should_responds_not_found(client):
     assert response.status_code == 404
     assert response_body['status'] == 'Not Found'
     assert response_body['statusCode'] == 404
+    assert response_body['errorMessage'] == expected_message
+
+
+def test_redirect_to_original_url_should_responds_method_not_allowed(client):
+    """Should responds MethodNotAllowed when makes a request with
+    a different method of GET
+    """
+
+    response = client.delete('/link/1234567')
+    response_body = json.loads(response.get_data(as_text=True))
+    expected_message = 'The method is not allowed for the requested URL.'
+
+    assert response.status_code == 405
+    assert response_body['status'] == 'Method Not Allowed'
+    assert response_body['statusCode'] == 405
     assert response_body['errorMessage'] == expected_message
