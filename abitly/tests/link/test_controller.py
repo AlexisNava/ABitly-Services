@@ -57,20 +57,6 @@ def test_get_generated_url_should_raise_internal_server_error():
         get_generated_url(original_url)
 
 
-def test_get_original_url_should_return_original_url():
-    """Should return original_url when the generated_url have a
-    valid format
-    """
-
-    # Saves and generate a new generated_url
-    generated_url = get_generated_url('https://circleci.com/')
-
-    # Search generated_url
-    original_url = get_original_url(generated_url)
-
-    assert original_url == 'https://circleci.com/'
-
-
 def test_get_original_url_should_rise_bad_request():
     """Should rise BadRequest when the generated_url have an invalid format"""
 
