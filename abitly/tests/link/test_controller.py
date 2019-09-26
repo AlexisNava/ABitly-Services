@@ -35,17 +35,6 @@ def test_validate_request_body_should_raise_bad_request():
         validate_request_body(request_data_wrong_type)
 
 
-def test_get_generated_url_should_return_generated_url():
-    """Should return the generated url when the
-    original_url is of type str
-    """
-
-    original_url = 'https://circleci.com/'
-    generated_url = get_generated_url(original_url)
-
-    assert len(generated_url) == 7
-
-
 def test_get_generated_url_should_raise_internal_server_error():
     """Should raise InternalServerError when the
     original_url is another of type str
