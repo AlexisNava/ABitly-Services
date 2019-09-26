@@ -82,29 +82,3 @@ def test_create_link_should_responds_method_not_allowed(client):
     assert response_body['status'] == 'Method Not Allowed'
     assert response_body['statusCode'] == 405
     assert response_body['errorMessage'] == expected_message
-
-
-def test_create_link_should_responds_not_found(client):
-    """Should responds NotFound when makes a request with
-    a different url of /
-    """
-
-    request_body = {
-        'originalUrl': 'https://discordapp.com/'
-    }
-    headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    }
-
-    response = client.post('/link/qrVwsCR', data=json.dumps(request_body),
-                           headers=headers)
-    response_body = json.loads(response.get_data(as_text=True))
-    expected_message = ('The requested URL was not found on the server. '
-                        'If you entered the URL manually please check '
-                        'your spelling and try again.').format()
-
-    assert response.status_code == 404
-    assert response_body['status'] == 'Not Found'
-    assert response_body['statusCode'] == 404
-    assert response_body['errorMessage'] == expected_message
