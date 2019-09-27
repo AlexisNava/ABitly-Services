@@ -12,7 +12,7 @@ from abitly.services.link.controller import (validate_request_body,
 link = Blueprint('link', __name__, url_prefix='/link')
 
 
-@link.route('/', methods=['POST'])
+@link.route('/', methods=['POST', 'OPTIONS'])
 @cross_origin(origin='*', headers=['Origin', 'X-Requested-With',
                                    'Content-Type',
                                    'Accept',
@@ -43,7 +43,8 @@ def create_link():
         generated_url = get_generated_url(original_url)
 
         return jsonify(statusCode=201, status='Created',
-                       generatedUrl=generated_url
+                       generatedUrl=generated_url,
+                       originalUrl=original_url
                        ), 201
 
     except (BadRequest, InternalServerError) as error:
