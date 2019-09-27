@@ -2,6 +2,7 @@
 
 from flask import Blueprint, request, jsonify, redirect
 from werkzeug.exceptions import BadRequest, InternalServerError, NotFound
+from flask_cors import cross_origin
 
 # Controller
 from abitly.services.link.controller import (validate_request_body,
@@ -12,6 +13,10 @@ link = Blueprint('link', __name__, url_prefix='/link')
 
 
 @link.route('/', methods=['POST'])
+@cross_origin(origin='*', headers=['Origin', 'X-Requested-With',
+                                   'Content-Type',
+                                   'Accept',
+                                   'Authorization'])
 def create_link():
     """Verifies if the original_url is already stored:
     - If not, creates a new generated_url and saves the original_url.
