@@ -33,6 +33,7 @@ def test_create_link_should_responds_created(client):
     assert response_body['statusCode'] == 201
     assert response_body['status'] == 'Created'
     assert len(response_body['generatedUrl']) == 7
+    assert response_body['originalUrl'] == 'https://discordapp.com/'
 
 
 def test_create_link_should_responds_bad_request(client):
