@@ -23,8 +23,7 @@ class Link(Base):
     """
 
     __tablename__ = 'links'
-    id = Column(String, primary_key=True,
-                default=ShortUUID().random(length=10))
+    id = Column(String, primary_key=True)
     original_url = Column(String, unique=True)
     generated_url = Column(String(7), unique=True)
 
@@ -38,5 +37,6 @@ class Link(Base):
         generated_url : str
             The URL generated with a length of 7 characters
         """
+        self.id = ShortUUID().random(length=10)
         self.original_url = original_url
         self.generated_url = generated_url
